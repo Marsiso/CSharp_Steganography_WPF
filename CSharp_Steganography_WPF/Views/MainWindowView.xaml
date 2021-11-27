@@ -1,0 +1,137 @@
+﻿<Window x:Class="CSharp_Steganography_WPF.Views.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CSharp_Steganography_WPF.Views"
+        mc:Ignorable="d"
+        Title="Steganography"
+        MinHeight="800"
+        MinWidth="1200"
+        Height="800"
+        Width="1200"
+        AllowsTransparency="True"
+        Background="#FF0D0D13"
+        Opacity="1"
+        WindowStyle="None"
+        BorderBrush="Transparent"
+        BorderThickness="0"
+        Mouse.MouseDown="Window_MouseDown"
+        ResizeMode="CanResizeWithGrip"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Normal">
+    <Grid Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!--#region TITLE BAR -->
+        <Grid Grid.Row="0"
+              Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="180"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="180"/>
+            </Grid.ColumnDefinitions>
+
+            <!--#region TITLE -->
+            <Label Grid.Column="1"
+                   Content="Steganography: Least Significant Bit"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   VerticalContentAlignment="Center"
+                   HorizontalContentAlignment="Center"
+                   FontSize="14"
+                   FontWeight="Bold"
+                   Foreground="AliceBlue"
+                   Background="Transparent"/>
+            <!--#endregion-->       
+            <!--#region CONTROL BUTTONS -->
+            <UniformGrid VerticalAlignment="Center"
+                         HorizontalAlignment="Right"
+                         Rows="1"
+                         Columns="0"
+                         Grid.Column="2"
+                         Grid.Row="0">
+                <Button Height="30"
+                        Width="60"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        BorderBrush="Transparent"
+                        FontWeight="ExtraBold"
+                        x:Name="Btn_Minimize"
+                        Click="Btn_Minimize_Click">
+                    <Label Content="🗕"
+                           Height="20"
+                           Width="30"
+                           FontSize="12"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Foreground="AliceBlue"
+                           Background="Transparent"
+                           FontWeight="ExtraBold"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center"
+                           Padding="0,0,0,3"/>
+                </Button>
+                <Button Height="30"
+                        Width="60"
+                        Background="Transparent"
+                        Foreground="Transparent"
+                        BorderThickness="0"
+                        BorderBrush="Transparent"
+                        x:Name="Btn_Maximize"
+                        Click="Btn_Maximize_Click">
+                    <Label Content="🗖"
+                           Height="20"
+                           Width="30"
+                           FontSize="12"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Foreground="AliceBlue"
+                           Background="Transparent"
+                           FontWeight="ExtraBold"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center"
+                           Padding="0,0,0,3"/>
+                </Button>
+                <Button Height="30"
+                        Width="60"
+                        Background="#FFE41A4A"
+                        BorderThickness="0"
+                        BorderBrush="Transparent"
+                        x:Name = "Btn_Close"
+                        Click="Btn_Close_Click">
+                    <Label Content="❌"
+                           Height="20"
+                           Width="30"
+                           FontSize="8"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Foreground="AliceBlue"
+                           Background="Transparent"
+                           FontWeight="ExtraBold"
+                           HorizontalContentAlignment="Center"
+                           VerticalContentAlignment="Center"/>
+                </Button>
+            </UniformGrid>
+            <!--#endregion-->
+        </Grid>
+        <!--#endregion-->
+        <!--#region CONTENT -->
+        <Grid Grid.Row="1"
+              Grid.Column="0"
+              Margin="5, 0, 5, 15"
+              Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <!--#endregion-->
+    </Grid>
+</Window>
