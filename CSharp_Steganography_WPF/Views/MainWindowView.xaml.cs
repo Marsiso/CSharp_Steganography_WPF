@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Navigation;
 
 namespace CSharp_Steganography_WPF.Views
 {
@@ -22,6 +12,8 @@ namespace CSharp_Steganography_WPF.Views
         public MainWindowView()
         {
             InitializeComponent();
+            Pages.NavigationUIVisibility = NavigationUIVisibility.Hidden;
+            Pages.Content = new HideMessagePage(MainWindowViewModel);
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -37,5 +29,19 @@ namespace CSharp_Steganography_WPF.Views
             : WindowState.Maximized;
 
         private void Btn_Close_Click(object sender, RoutedEventArgs e) => this.Close();
+
+        private void Btn_HideMessage_Click(object sender, RoutedEventArgs e)
+        {
+            Btn_HideMessage.Opacity = 1;
+            Btn_ExtractMessage.Opacity = 0.25;
+            Pages.Content = new HideMessagePage(MainWindowViewModel);
+        }
+
+        private void Btn_ExtractMessage_Click(object sender, RoutedEventArgs e)
+        {
+            Btn_ExtractMessage.Opacity = 1;
+            Btn_HideMessage.Opacity = 0.25;
+            Pages.Content = new ExtractMessagePage(MainWindowViewModel);
+        }
     }
 }
