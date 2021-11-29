@@ -16,5 +16,11 @@ namespace CSharp_Steganography_WPF.Views
             DataContext = mainWindowViewModel;
             InitializeComponent();
         }
+
+        private void TextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            TextBox? textBox = sender as TextBox;
+            mainWindowViewModel.CharCounter = textBox.Text.Length.ToString() + @"/" + mainWindowViewModel.MaxLength.ToString();
+        }
     }
 }

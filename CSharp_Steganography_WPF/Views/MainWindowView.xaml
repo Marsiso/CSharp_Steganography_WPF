@@ -22,9 +22,11 @@
         WindowStartupLocation="CenterScreen"
         WindowState="Normal"
         Icon="/Assets/Icon_Taskbar.ico">
+
     <Window.DataContext>
         <viewModels:MainWindowViewModel x:Name="MainWindowViewModel"/>
     </Window.DataContext>
+
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

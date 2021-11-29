@@ -16,24 +16,28 @@ namespace CSharp_Steganography_WPF.ViewModels
         public Bitmap SourceImage
         {
             get => sourceImage;
-            set => OnPropertyChanged(ref sourceImage, value);
+            set
+            {
+                OnPropertyChanged(ref sourceImage, value);
+                MaxLength = value.Width * value.Height * 3;
+            }
         }
 
         private Bitmap outputImage;
 
-        public Bitmap OutputImage
-        {
-            get => outputImage;
-            set => OnPropertyChanged(ref outputImage, value);
-        }
+        public Bitmap OutputImage { get => outputImage; set => OnPropertyChanged(ref outputImage, value); }
 
         private string text;
 
-        public string Text
-        {
-            get => text;
-            set => OnPropertyChanged(ref text, value);
-        }
+        public string Text { get => text; set => OnPropertyChanged(ref text, value); }
+
+        private int maxLength;
+
+        public int MaxLength { get => maxLength; private set => OnPropertyChanged(ref maxLength, value); }
+
+        private string charCounter;
+
+        public string CharCounter { get => charCounter; set => OnPropertyChanged(ref charCounter, value); }
 
         public enum State
         {
@@ -45,12 +49,13 @@ namespace CSharp_Steganography_WPF.ViewModels
         public MainWindowViewModel()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
-            //@"\Assets\Image_Transparent_Camera.png"
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-            string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName + @"\Assets\Image_Transparent_Image.png";
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            string? path = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName + @"\Assets\Image_Transparent_Image.png";
+            if (path is null)
+                throw new ArgumentNullException(nameof(path));
             Bitmap bitmap = new(path);
             SourceImage = OutputImage = bitmap;
+            Text = string.Empty;
+            CharCounter = @"/" + maxLength.ToString();
         }
 
         [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
