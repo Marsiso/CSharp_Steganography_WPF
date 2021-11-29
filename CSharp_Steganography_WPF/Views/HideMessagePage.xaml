@@ -65,7 +65,7 @@
                     HorizontalContentAlignment="Center"
                     Grid.Column="2"
                     x:Name="Btn_OpenFromFile"
-                    Click="{Binding CommandOpenFromFile}">
+                    Command="{Binding CommandOpenFromFile}">
                 <Image Style="{StaticResource ImageStyle}"
                        Source="/Assets/Icon_Open_White.png"/>
             </Button>
@@ -84,10 +84,7 @@
                AllowDrop="False"
                MinHeight="200"
                MaxHeight="400"
-               Stretch="None"
-               ScrollViewer.CanContentScroll="False"
-               ScrollViewer.HorizontalScrollBarVisibility="Auto"
-               ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+               Stretch="None"/>
         <!--#endregion-->
         <!--#region OUTPUT IMAGE HEADER -->
         <Grid Grid.Column="1"
@@ -115,7 +112,8 @@
                     BorderBrush="Transparent"
                     VerticalContentAlignment="Center"
                     HorizontalContentAlignment="Center"
-                    Grid.Column="2">
+                    Grid.Column="2"
+                    Command="{Binding CommandSaveToFile}">
                 <Image Style="{StaticResource ImageStyle}"
                        Source="/Assets/Icon_Save_White.png"/>
             </Button>
@@ -134,10 +132,7 @@
                AllowDrop="False"
                MinHeight="200"
                MaxHeight="400"
-               Stretch="None"
-               ScrollViewer.CanContentScroll="False"
-               ScrollViewer.HorizontalScrollBarVisibility="Auto"
-               ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+               Stretch="None"/>
         <!--#endregion-->
         <!--#region MESSAGE TEXTBOX HEADER -->
         <Grid Grid.Column="0"

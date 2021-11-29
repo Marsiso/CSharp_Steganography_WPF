@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Win32;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace CSharp_Steganography_WPF.ViewModels
 {
@@ -20,6 +20,7 @@ namespace CSharp_Steganography_WPF.ViewModels
             {
                 OnPropertyChanged(ref sourceImage, value);
                 MaxLength = value.Width * value.Height * 3;
+                OutputImage = value;
             }
         }
 
@@ -180,6 +181,36 @@ namespace CSharp_Steganography_WPF.ViewModels
                 number /= 2;
             }
             return result;
+        }
+
+        public ICommand CommandOpenFromFile
+        {
+            get => new CommandHandler(() =>
+            {
+                OpenFileDialog openFileDialog = new();
+                openFileDialog.Filter = "Image file (*.png)|*.png|Image file (*.bmp)|*.bmp";
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                if (openFileDialog.ShowDialog() is false)
+                    return;
+                SourceImage = new(openFileDialog.FileName);
+            }, () => true);
+        }
+
+        public ICommand CommandSaveToFile
+        {
+            get => new CommandHandler(() =>
+            {
+                SaveFileDialog saveFileDialog = new();
+                saveFileDialog.Filter = "Image file (*.png)|*.png|Image file (*.bmp)|*.bmp";
+                saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                ImageFormat format = ImageFormat.Png;
+                if (saveFileDialog.ShowDialog() is false)
+                    return;
+                string extension = Path.GetExtension(saveFileDialog.FileName);
+                if (extension is ".bmp")
+                    format = ImageFormat.Bmp;
+                outputImage.Save(saveFileDialog.FileName, format);
+            }, () => true);
         }
     }
 }
