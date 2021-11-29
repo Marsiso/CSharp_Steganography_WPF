@@ -18,7 +18,7 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
         <!--#endregion-->
-        <!--#region IMAGE CONVERTER -->
+        <!--#region CONVERTERS -->
         <viewModels:ImageConverter x:Key="ImageConverter"/>
         <viewModels:CharCounter x:Key="CharCounter"/>
         <!--#endregion-->
@@ -63,7 +63,9 @@
                     BorderBrush="Transparent"
                     VerticalContentAlignment="Center"
                     HorizontalContentAlignment="Center"
-                    Grid.Column="2">
+                    Grid.Column="2"
+                    x:Name="Btn_OpenFromFile"
+                    Click="{Binding CommandOpenFromFile}">
                 <Image Style="{StaticResource ImageStyle}"
                        Source="/Assets/Icon_Open_White.png"/>
             </Button>

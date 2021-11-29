@@ -17,8 +17,5 @@ namespace CSharp_Steganography_WPF.ViewModels
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => null;
-
-
-        //Content="{Binding Text, ElementName=TxtBox,Converter={StaticResource ResourceKey=CharCounter}}"
     }
 }
