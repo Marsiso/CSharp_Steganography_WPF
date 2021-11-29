@@ -23,7 +23,9 @@
     <Resource Include="Assets\Icon_Open_White.png" />
     <Resource Include="Assets\Icon_Save_White.png" />
     <Resource Include="Assets\Icon_TaskBar.ico" />
-    <Resource Include="Assets\Image_Transparent_Image.png" />
+    <Resource Include="Assets\Image_Transparent_Image.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

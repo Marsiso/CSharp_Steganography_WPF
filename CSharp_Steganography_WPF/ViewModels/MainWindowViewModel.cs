@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace CSharp_Steganography_WPF.ViewModels
 {
@@ -45,15 +46,18 @@ namespace CSharp_Steganography_WPF.ViewModels
             Filling_With_Zeros
         };
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public MainWindowViewModel()
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
-            string? path = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName + @"\Assets\Image_Transparent_Image.png";
-            if (path is null)
-                throw new ArgumentNullException(nameof(path));
-            Bitmap bitmap = new(path);
-            SourceImage = OutputImage = bitmap;
+            var uri = new Uri("pack://application:,,,/Assets/Image_Transparent_Image.png");
+            BitmapImage bitmapImage = new BitmapImage(uri);
+            using (MemoryStream outStream = new MemoryStream())
+            {
+                BitmapEncoder bitmapEncoder = new BmpBitmapEncoder();
+                bitmapEncoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+                bitmapEncoder.Save(outStream);
+                Bitmap bitmap = new Bitmap(outStream);
+                SourceImage = OutputImage = new Bitmap(bitmap);
+            }
             Text = string.Empty;
             CharCounter = @"/" + maxLength.ToString();
         }
