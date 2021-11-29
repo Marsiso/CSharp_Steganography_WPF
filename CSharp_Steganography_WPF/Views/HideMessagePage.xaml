@@ -76,15 +76,18 @@
                Source="{Binding SourceImage, Mode=TwoWay}"/>
         <!--#endregion-->
         <!--#region SOURCE IMAGE -->
-        <Image Grid.Row="1"
-               Grid.Column="0"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Center"
-               Source="{Binding SourceImage, Mode=OneWay, Converter={StaticResource ImageConverter}}"
-               AllowDrop="False"
-               MinHeight="200"
-               MaxHeight="400"
-               Stretch="None"/>
+        <ScrollViewer Grid.Row="1"
+                      Grid.Column="0"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Auto"
+                      Height="400">
+            <Image VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Source="{Binding SourceImage, Mode=OneWay, Converter={StaticResource ImageConverter}}"
+                   AllowDrop="False"
+                   Stretch="None"
+                   MouseWheel="Image_MouseWheel"/>
+        </ScrollViewer>
         <!--#endregion-->
         <!--#region OUTPUT IMAGE HEADER -->
         <Grid Grid.Column="1"
@@ -124,15 +127,18 @@
                Source="{Binding OutputImage, Mode=TwoWay}"/>
         <!--#endregion-->
         <!--#region OUTPUT IMAGE -->
-        <Image Grid.Row="1"
-               Grid.Column="1"
-               VerticalAlignment="Center"
+        <ScrollViewer Grid.Row="1"
+                      Grid.Column="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Auto"
+                      Height="400">
+            <Image VerticalAlignment="Center"
                HorizontalAlignment="Center"
                Source="{Binding OutputImage, Mode=OneWay, Converter={StaticResource ImageConverter}}"
                AllowDrop="False"
-               MinHeight="200"
-               MaxHeight="400"
-               Stretch="None"/>
+               Stretch="None"
+               MouseWheel="Image_MouseWheel"/>
+        </ScrollViewer>
         <!--#endregion-->
         <!--#region MESSAGE TEXTBOX HEADER -->
         <Grid Grid.Column="0"

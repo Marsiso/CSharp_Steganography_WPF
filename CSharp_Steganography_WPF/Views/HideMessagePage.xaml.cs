@@ -1,5 +1,6 @@
 ﻿using CSharp_Steganography_WPF.ViewModels;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace CSharp_Steganography_WPF.Views
 {
@@ -9,6 +10,8 @@ namespace CSharp_Steganography_WPF.Views
     public partial class HideMessagePage : Page
     {
         readonly MainWindowViewModel mainWindowViewModel;
+
+        private double _zoomValue = 1.0;
 
         public HideMessagePage(MainWindowViewModel mainWindowViewModel)
         {
@@ -21,6 +24,24 @@ namespace CSharp_Steganography_WPF.Views
         {
             TextBox? textBox = sender as TextBox;
             mainWindowViewModel.CharCounter = textBox.Text.Length.ToString() + @"/" + mainWindowViewModel.MaxLength.ToString();
+        }
+
+        private void Image_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                _zoomValue += 0.05;
+            }
+            else
+            {
+                _zoomValue -= 0.05;
+                if (_zoomValue < 0.05)
+                    _zoomValue = 0.05;
+            }
+            Image image = sender as Image;
+            ScaleTransform scale = new ScaleTransform(_zoomValue, _zoomValue);
+            image.LayoutTransform = scale;
+            e.Handled = true;
         }
     }
 }
