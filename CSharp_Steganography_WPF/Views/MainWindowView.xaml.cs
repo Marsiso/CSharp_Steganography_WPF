@@ -13,7 +13,7 @@ namespace CSharp_Steganography_WPF.Views
         {
             InitializeComponent();
             Pages.NavigationUIVisibility = NavigationUIVisibility.Hidden;
-            Pages.Content = new HideMessagePage(MainWindowViewModel);
+            Pages.Content = new HideMessagePage(new ViewModels.MainWindowViewModel());
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -34,14 +34,14 @@ namespace CSharp_Steganography_WPF.Views
         {
             Btn_HideMessage.Opacity = 1;
             Btn_ExtractMessage.Opacity = 0.25;
-            Pages.Content = new HideMessagePage(MainWindowViewModel);
+            Pages.Content = new HideMessagePage(new ViewModels.MainWindowViewModel());
         }
 
         private void Btn_ExtractMessage_Click(object sender, RoutedEventArgs e)
         {
             Btn_ExtractMessage.Opacity = 1;
             Btn_HideMessage.Opacity = 0.25;
-            Pages.Content = new ExtractMessagePage(MainWindowViewModel);
+            Pages.Content = new ExtractMessagePage(new ViewModels.MainWindowViewModel());
         }
     }
 }

@@ -23,7 +23,7 @@ namespace CSharp_Steganography_WPF.Views
         private void TextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             TextBox? textBox = sender as TextBox;
-            mainWindowViewModel.CharCounter = textBox.Text.Length.ToString() + @"/" + mainWindowViewModel.MaxLength.ToString();
+            mainWindowViewModel.CharCounter = textBox?.Text.Length.ToString() ?? "0" + @"/" + mainWindowViewModel.MaxLength.ToString();
         }
 
         private void Image_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
@@ -38,7 +38,12 @@ namespace CSharp_Steganography_WPF.Views
                 if (_zoomValue < 0.05)
                     _zoomValue = 0.05;
             }
-            Image image = sender as Image;
+            Image? image = sender as Image;
+            if (image is null)
+            {
+                e.Handled = true;
+                return;
+            } 
             ScaleTransform scale = new ScaleTransform(_zoomValue, _zoomValue);
             image.LayoutTransform = scale;
             e.Handled = true;

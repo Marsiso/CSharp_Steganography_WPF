@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSharp_Steganography_WPF.Views"
-        xmlns:viewModels="clr-namespace:CSharp_Steganography_WPF.ViewModels"
         mc:Ignorable="d"
         Title="Steganography"
         MinHeight="800"
@@ -22,11 +21,6 @@
         WindowStartupLocation="CenterScreen"
         WindowState="Normal"
         Icon="/Assets/Icon_Taskbar.ico">
-
-    <Window.DataContext>
-        <viewModels:MainWindowViewModel x:Name="MainWindowViewModel"/>
-    </Window.DataContext>
-
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -58,6 +52,19 @@
                         BorderThickness="0"
                         BorderBrush="Transparent"
                         VerticalContentAlignment="Center">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
                     <Label Content="HIDE"
                            FontSize="12"
                            Margin="0"
@@ -76,6 +83,19 @@
                         BorderBrush="Transparent"
                         Width="90"
                         VerticalContentAlignment="Center">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
                     <Label Content="EXTRACT"
                            FontSize="12"
                            Margin="0"
@@ -117,6 +137,24 @@
                         x:Name="Btn_Minimize"
                         Click="Btn_Minimize_Click"
                         VerticalContentAlignment="Center">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="0.8"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <Label Content="🗕"
                            FontSize="12"
                            Margin="0"
@@ -134,6 +172,24 @@
                         x:Name="Btn_Maximize"
                         Click="Btn_Maximize_Click"
                         VerticalContentAlignment="Center">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="0.8"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <Label Content="🗖"
                            FontSize="12"
                            Margin="0"
@@ -150,6 +206,24 @@
                         x:Name = "Btn_Close"
                         Click="Btn_Close_Click"
                         VerticalContentAlignment="Center">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="0.8"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <Label Content="❌"
                            FontSize="8"
                            Margin="0"

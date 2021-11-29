@@ -24,7 +24,8 @@
         <!--#endregion-->
     </Page.Resources>
     <Grid VerticalAlignment="Stretch"
-          HorizontalAlignment="Stretch">
+          HorizontalAlignment="Stretch"
+          Background="Transparent">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -66,6 +67,24 @@
                     Grid.Column="2"
                     x:Name="Btn_OpenFromFile"
                     Command="{Binding CommandOpenFromFile}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
                 <Image Style="{StaticResource ImageStyle}"
                        Source="/Assets/Icon_Open_White.png"/>
             </Button>
@@ -80,7 +99,9 @@
                       Grid.Column="0"
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Auto"
-                      Height="400">
+                      Height="400"
+                      Background="Transparent"
+                      Foreground="Transparent">
             <Image VerticalAlignment="Center"
                    HorizontalAlignment="Center"
                    Source="{Binding SourceImage, Mode=OneWay, Converter={StaticResource ImageConverter}}"
@@ -117,6 +138,24 @@
                     HorizontalContentAlignment="Center"
                     Grid.Column="2"
                     Command="{Binding CommandSaveToFile}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
                 <Image Style="{StaticResource ImageStyle}"
                        Source="/Assets/Icon_Save_White.png"/>
             </Button>
@@ -131,7 +170,9 @@
                       Grid.Column="1"
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Auto"
-                      Height="400">
+                      Height="400"
+                      Background="Transparent"
+                      Foreground="Transparent">
             <Image VerticalAlignment="Center"
                HorizontalAlignment="Center"
                Source="{Binding OutputImage, Mode=OneWay, Converter={StaticResource ImageConverter}}"
@@ -141,37 +182,18 @@
         </ScrollViewer>
         <!--#endregion-->
         <!--#region MESSAGE TEXTBOX HEADER -->
-        <Grid Grid.Column="0"
-              Grid.ColumnSpan="2"
-              Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="MESSAGE"
-                   FontSize="12"
-                   FontWeight="Bold"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   VerticalContentAlignment="Center"
-                   HorizontalContentAlignment="Center"
-                   Foreground="AliceBlue"
-                   Background="Transparent"
-                   Grid.Column="1"/>
-            <Button VerticalAlignment="Center"
-                    HorizontalAlignment="Left"
-                    Background="Transparent"
-                    Foreground="Transparent"
-                    BorderThickness="0"
-                    BorderBrush="Transparent"
-                    VerticalContentAlignment="Center"
-                    HorizontalContentAlignment="Center"
-                    Grid.Column="2">
-                <Image Style="{StaticResource ImageStyle}"
-                       Source="/Assets/Icon_Open_White.png"/>
-            </Button>
-        </Grid>
+        <Label Content="MESSAGE"
+               FontSize="12"
+               FontWeight="Bold"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Center"
+               Foreground="AliceBlue"
+               Background="Transparent"
+               Grid.Column="0"
+               Grid.ColumnSpan="2"
+               Grid.Row="2"/>
         <!--#endregion-->
         <!--#region MESSAGE TEXTBOX -->
         <TextBox Grid.Row="3"
@@ -235,7 +257,26 @@
                 FontSize="12"
                 FontWeight="Bold"
                 Height="30"
-                InputScope="Default">
+                InputScope="Default"
+                Command="{Binding CommandHideMessage}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" Value="0.8"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
             <Button.Background>
                 <RadialGradientBrush RadiusX="1"
                                      RadiusY="0.4">

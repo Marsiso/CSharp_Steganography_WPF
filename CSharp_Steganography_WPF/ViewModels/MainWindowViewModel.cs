@@ -211,5 +211,21 @@ namespace CSharp_Steganography_WPF.ViewModels
                 outputImage.Save(saveFileDialog.FileName, format);
             }, () => true);
         }
+
+        public ICommand CommandHideMessage
+        {
+            get => new CommandHandler(() =>
+            {
+                OutputImage = MessageIntoImage(text, sourceImage);
+            }, () => true);
+        }
+
+        public ICommand CommandExtractMessage
+        {
+            get => new CommandHandler(() =>
+            {
+                Text = MessageFromImage(sourceImage);
+            }, () => true);
+        }
     }
 }
