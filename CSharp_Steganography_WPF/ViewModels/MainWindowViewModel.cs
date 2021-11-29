@@ -86,7 +86,7 @@ namespace CSharp_Steganography_WPF.ViewModels
                             if (state is State.Filling_With_Zeros && trailingZeroes is 8)
                             {
                                 if ((pxElementIndex - 1) % 3 < 2)
-                                    bitmap.SetPixel(j, i, Color.FromArgb(R, G, B));
+                                    bitmap.SetPixel(j, i, Color.FromArgb(pixel.A, R, G, B));
                                 return bitmap;
                             }
                             if (charIndex >= msg.Length)
@@ -117,7 +117,7 @@ namespace CSharp_Steganography_WPF.ViewModels
                                     B += charAsValue % 2;
                                     charAsValue >>= 1;
                                 }
-                                bitmap.SetPixel(j, i, Color.FromArgb(R, G, B));
+                                bitmap.SetPixel(j, i, Color.FromArgb(pixel.A, R, G, B));
                                 break;
                             default:
                                 break;
