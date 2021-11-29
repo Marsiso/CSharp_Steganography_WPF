@@ -6,13 +6,11 @@
         xmlns:local="clr-namespace:CSharp_Steganography_WPF.Views"
         mc:Ignorable="d"
         Title="Steganography"
-        MinHeight="800"
-        MinWidth="1200"
-        Height="800"
-        Width="1200"
-        AllowsTransparency="True"
-        Background="#FF0D0D13"
+        MinHeight="720"
+        MinWidth="1280"
+        Background="Transparent"
         Opacity="1"
+        AllowsTransparency="True"
         WindowStyle="None"
         BorderBrush="Transparent"
         BorderThickness="0"
@@ -21,7 +19,8 @@
         WindowStartupLocation="CenterScreen"
         WindowState="Normal"
         Icon="/Assets/Icon_Taskbar.ico">
-    <Grid Background="Transparent">
+    <Grid Background="#FF0D0D13"
+          Margin="6">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
