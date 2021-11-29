@@ -193,8 +193,7 @@
                  PreviewTextInput="TextBox_PreviewTextInput"/>
         <!--#endregion-->
         <!--#region CHAR COUNTER -->
-        <Label Content="{Binding Text, ElementName=TxtBox,Converter={StaticResource ResourceKey=CharCounter}}"
-               FontSize="10"
+        <Label FontSize="10"
                VerticalAlignment="Center"
                HorizontalAlignment="Right"
                VerticalContentAlignment="Center"
@@ -205,7 +204,18 @@
                FontStyle="Italic"
                Foreground="AliceBlue"
                Background="Transparent"
-               ToolTip="Total number of characters used in message. Maximum number of characters is based on the picture's resolution."/>
+               ToolTip="Total number of characters used in message. Maximum number of characters is based on the picture's resolution.">
+            <Label.Content>
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}/{1}">
+                            <Binding Path="Text" ElementName="TxtBox" Converter="{StaticResource ResourceKey=CharCounter}"/>
+                            <Binding Path="MaxLength" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Label.Content>
+        </Label>
         <!--#endregion-->
         <!--#region BUTTON HIDE MESSAGE -->
         <Button VerticalAlignment="Center"
