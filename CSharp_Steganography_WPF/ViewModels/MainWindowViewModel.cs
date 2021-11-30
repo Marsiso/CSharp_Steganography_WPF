@@ -20,7 +20,7 @@ namespace CSharp_Steganography_WPF.ViewModels
             set
             {
                 OnPropertyChanged(ref sourceImage, value);
-                MaxLength = value.Width * value.Height * 3;
+                MaxLength = value.Width * value.Height * 3 / 8;
             }
         }
 
@@ -70,23 +70,25 @@ namespace CSharp_Steganography_WPF.ViewModels
             var charAsValue = 0;
             long pxElementIndex = 0;
             var trailingZeroes = 0;
-            int R = 0, G = 0, B = 0;
+            int A = 0, R = 0, G = 0, B = 0;
 
             for (int i = 0; i < bitmap.Height; i++)
                 for (int j = 0; j < bitmap.Width; j++)
                 {
                     Color pixel = bitmap.GetPixel(j, i);
+                    A = pixel.A - pixel.A % 2;
                     R = pixel.R - pixel.R % 2;
                     G = pixel.G - pixel.G % 2;
                     B = pixel.B - pixel.B % 2;
-                    for (var n = 0; n < 3; n++)
+
+                    for (var n = 0; n < 4; n++)
                     {
                         if (pxElementIndex % 8 is 0)
                         {
                             if (state is State.Filling_With_Zeros && trailingZeroes is 8)
                             {
-                                if ((pxElementIndex - 1) % 3 < 2)
-                                    bitmap.SetPixel(j, i, Color.FromArgb(pixel.A, R, G, B));
+                                if ((pxElementIndex - 1) % 4 < 3)
+                                    bitmap.SetPixel(j, i, Color.FromArgb(A, R, G, B));
                                 return bitmap;
                             }
                             if (charIndex >= msg.Length)
@@ -95,29 +97,36 @@ namespace CSharp_Steganography_WPF.ViewModels
                                 charAsValue = msg[charIndex++];
                         }
 
-                        switch (pxElementIndex % 3)
+                        switch (pxElementIndex % 4)
                         {
                             case 0:
                                 if (state is State.Hiding)
                                 {
-                                    R += charAsValue % 2;
+                                    A += charAsValue % 2;
                                     charAsValue >>= 1;
                                 }
                                 break;
                             case 1:
                                 if (state is State.Hiding)
                                 {
-                                    G += charAsValue % 2;
+                                    R += charAsValue % 2;
                                     charAsValue >>= 1;
                                 }
                                 break;
                             case 2:
                                 if (state is State.Hiding)
                                 {
+                                    G += charAsValue % 2;
+                                    charAsValue >>= 1;
+                                }
+                                break;
+                            case 3:
+                                if (state is State.Hiding)
+                                {
                                     B += charAsValue % 2;
                                     charAsValue >>= 1;
                                 }
-                                bitmap.SetPixel(j, i, Color.FromArgb(pixel.A, R, G, B));
+                                bitmap.SetPixel(j, i, Color.FromArgb(A, R, G, B));
                                 break;
                             default:
                                 break;
@@ -142,17 +151,20 @@ namespace CSharp_Steganography_WPF.ViewModels
                 for (var j = 0; j < source.Width; j++)
                 {
                     Color pixel = source.GetPixel(j, i);
-                    for (var n = 0; n < 3; n++)
+                    for (var n = 0; n < 4; n++)
                     {
-                        switch (pxElementIndex % 3)
+                        switch (pxElementIndex % 4)
                         {
                             case 0:
-                                charAsValue = (charAsValue << 1) + pixel.R % 2;
+                                charAsValue = (charAsValue << 1) + pixel.A % 2;
                                 break;
                             case 1:
-                                charAsValue = (charAsValue << 1) + pixel.G % 2;
+                                charAsValue = (charAsValue << 1) + pixel.R % 2;
                                 break;
                             case 2:
+                                charAsValue = (charAsValue << 1) + pixel.G % 2;
+                                break;
+                            case 3:
                                 charAsValue = (charAsValue << 1) + pixel.B % 2;
                                 break;
                             default:
@@ -162,7 +174,14 @@ namespace CSharp_Steganography_WPF.ViewModels
                         pxElementIndex++;
                         if (pxElementIndex % 8 is 0)
                         {
-                            charAsValue = BitReversal(charAsValue);
+                            var result = 0;
+                            for (var k = 0; k < 8; k++)
+                            {
+                                result = (result * 2) + (charAsValue % 2);
+                                charAsValue /= 2;
+                            }
+
+                            charAsValue = result;
                             if (charAsValue is 0)
                                 return msg.ToString();
 
@@ -173,17 +192,6 @@ namespace CSharp_Steganography_WPF.ViewModels
                 }
 
             return msg.ToString();
-        }
-
-        public int BitReversal(int number)
-        {
-            var result = 0;
-            for (var i = 0; i < 8; i++)
-            {
-                result = (result * 2) + (number % 2);
-                number /= 2;
-            }
-            return result;
         }
 
         public ICommand CommandOpenFromFile
