@@ -220,7 +220,14 @@ namespace CSharp_Steganography_WPF.ViewModels
                 string extension = Path.GetExtension(saveFileDialog.FileName);
                 if (extension is ".bmp")
                     format = ImageFormat.Bmp;
-                outputImage.Save(saveFileDialog.FileName, format);
+                try
+                {
+                    outputImage.Save(saveFileDialog.FileName, format);
+                }
+                catch (Exception ex)
+                {
+                    Text = ex.Message;
+                }
             }, () => true);
         }
 

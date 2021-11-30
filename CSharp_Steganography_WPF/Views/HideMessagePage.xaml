@@ -96,6 +96,8 @@
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Auto"
                       Height="400"
+                      ClipToBounds="True"
+                       FlowDirection="RightToLeft" 
                       Background="Transparent"
                       Foreground="Transparent">
             <Image VerticalAlignment="Center"
