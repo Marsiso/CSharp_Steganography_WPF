@@ -20,7 +20,7 @@ namespace CSharp_Steganography_WPF.ViewModels
             set
             {
                 OnPropertyChanged(ref sourceImage, value);
-                MaxLength = value.Width * value.Height * 3 / 8;
+                MaxLength = (value.Width * value.Height) >> 1;
             }
         }
 
