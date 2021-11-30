@@ -87,7 +87,7 @@ namespace CSharp_Steganography_WPF.ViewModels
                         {
                             if (state is State.Filling_With_Zeros && trailingZeroes is 8)
                             {
-                                if ((pxElementIndex - 1) % 4 < 3)
+                                if ((pxElementIndex - 1) % 4 < 2)
                                     bitmap.SetPixel(j, i, Color.FromArgb(A, R, G, B));
                                 return bitmap;
                             }
