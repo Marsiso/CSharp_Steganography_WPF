@@ -35,7 +35,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="24"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <!--#region SOURCE IMAGE HEADER -->
@@ -89,10 +89,6 @@
                        Source="/Assets/Icon_Open_White.png"/>
             </Button>
         </Grid>
-        <Image Grid.Row="1"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Center"
-               Source="{Binding SourceImage, Mode=TwoWay}"/>
         <!--#endregion-->
         <!--#region SOURCE IMAGE -->
         <ScrollViewer Grid.Row="1"
@@ -160,10 +156,6 @@
                        Source="/Assets/Icon_Save_White.png"/>
             </Button>
         </Grid>
-        <Image Grid.Row="1"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Center"
-               Source="{Binding OutputImage, Mode=TwoWay}"/>
         <!--#endregion-->
         <!--#region OUTPUT IMAGE -->
         <ScrollViewer Grid.Row="1"

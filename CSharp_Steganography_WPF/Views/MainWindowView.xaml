@@ -12,15 +12,14 @@
         Opacity="1"
         AllowsTransparency="True"
         WindowStyle="None"
-        BorderBrush="Transparent"
-        BorderThickness="0"
         Mouse.MouseDown="Window_MouseDown"
         ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
         WindowState="Normal"
-        Icon="/Assets/Icon_Taskbar.ico">
-    <Grid Background="#FF0D0D13"
-          Margin="6">
+        Icon="/Assets/Icon_Taskbar.ico"
+        BorderBrush="Transparent"
+        BorderThickness="6">
+    <Grid Background="#FF0D0D13">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
