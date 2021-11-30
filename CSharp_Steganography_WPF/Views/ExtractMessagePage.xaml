@@ -132,6 +132,7 @@
                  VerticalScrollBarVisibility="Auto"
                  AcceptsReturn="True"
                  IsReadOnly="True"
+                 IsHitTestVisible="False"
                  Text="{Binding Text, Mode=OneWay}"/>
         <!--#endregion-->
         <!--#region BUTTON EXTRACT MESSAGE -->
