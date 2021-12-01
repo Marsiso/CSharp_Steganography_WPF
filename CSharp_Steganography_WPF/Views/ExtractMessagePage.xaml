@@ -21,6 +21,7 @@
         <!--#region CONVERTERS -->
         <viewModels:ImageConverter x:Key="ImageConverter"/>
         <viewModels:CharCounter x:Key="CharCounter"/>
+        <viewModels:ExtensionConverter x:Key="ExtensionConverter"/>
         <!--#endregion-->
     </Page.Resources>
     <Grid VerticalAlignment="Stretch"
@@ -31,6 +32,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="24"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -88,8 +90,36 @@
             </Button>
         </Grid>
         <!--#endregion-->
+        <!--#region SOURCE PICTURE INFO -->
+        <Label FontSize="10"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"
+               VerticalContentAlignment="Center"
+               HorizontalContentAlignment="Center"
+               FontStyle="Italic"
+               Foreground="AliceBlue"
+               Background="Transparent"
+               ToolTip="Total number of characters used in message. Maximum number of characters is based on the picture's resolution."
+               Grid.Row="1"
+               Grid.Column="0"
+               Padding="14,0,0,0">
+            <Label.Content>
+                <TextBlock>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}Resoulution: {0} x {1} px    Size: {2} B    Extension: {3}    Path: {4}">
+                            <Binding Path="SourceImage.Width" />
+                            <Binding Path="SourceImage.Height" />
+                            <Binding Path="SourceImageSize" />
+                            <Binding Path="SourceImageFormat" Converter="{StaticResource ExtensionConverter}" />
+                            <Binding Path="SourceImagePath" />
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Label.Content>
+        </Label>
+        <!--#endregion-->
         <!--#region SOURCE IMAGE -->
-        <ScrollViewer Grid.Row="1"
+        <ScrollViewer Grid.Row="2"
                       Grid.Column="0"
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Auto"
@@ -114,10 +144,10 @@
                HorizontalContentAlignment="Center"
                Foreground="AliceBlue"
                Background="Transparent"
-               Grid.Row="2"/>
+               Grid.Row="3"/>
         <!--#endregion-->
         <!--#region MESSAGE TEXTBOX -->
-        <TextBox Grid.Row="3"
+        <TextBox Grid.Row="4"
                  FontSize="12"
                  Background="Transparent"
                  Foreground="AliceBlue"
@@ -132,8 +162,32 @@
                  VerticalScrollBarVisibility="Auto"
                  AcceptsReturn="True"
                  IsReadOnly="True"
-                 IsHitTestVisible="False"
-                 Text="{Binding Text, Mode=OneWay}"/>
+                 Text="{Binding Text, Mode=OneWay}">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TextBox}">
+                                <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                                    <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsEnabled" Value="false">
+                                        <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter Property="BorderBrush" TargetName="border" Value="#FFF01D47"/>
+                                    </Trigger>
+                                    <Trigger Property="IsFocused" Value="true">
+                                        <Setter Property="BorderBrush" TargetName="border" Value="#FFF01D47"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
         <!--#endregion-->
         <!--#region BUTTON EXTRACT MESSAGE -->
         <Button VerticalAlignment="Center"
@@ -145,7 +199,7 @@
                 HorizontalContentAlignment="Center"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Grid.Row="5"
+                Grid.Row="6"
                 Content="EXTRACT MESSAGE"
                 FontSize="12"
                 FontWeight="Bold"

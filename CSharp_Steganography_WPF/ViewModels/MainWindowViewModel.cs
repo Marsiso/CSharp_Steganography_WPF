@@ -13,6 +13,8 @@ namespace CSharp_Steganography_WPF.ViewModels
     public sealed class MainWindowViewModel : BaseViewModel
     {
         private Bitmap sourceImage;
+        private long sourceImageSize;
+        private long outputImageSize;
 
         public Bitmap SourceImage
         {
@@ -21,12 +23,49 @@ namespace CSharp_Steganography_WPF.ViewModels
             {
                 OnPropertyChanged(ref sourceImage, value);
                 MaxLength = (value.Width * value.Height) >> 1;
+                using (var memoryStream = new MemoryStream(Convert.ToInt32(sourceImageSize)))
+                {
+                    value.Save(memoryStream, sourceImageFormat);
+                    SourceImageSize = memoryStream.Length;
+                }
             }
         }
 
+        private ImageFormat sourceImageFormat;
+
+        public ImageFormat SourceImageFormat { get => sourceImageFormat; set => OnPropertyChanged(ref sourceImageFormat, value); }
+
+        private ImageFormat outputImageFormat;
+
+        public ImageFormat OutputImageFormat { get => outputImageFormat; set => OnPropertyChanged(ref outputImageFormat, value); }
+
+        private string sourceImagePath;
+
+        public string SourceImagePath { get => sourceImagePath; set => OnPropertyChanged(ref sourceImagePath, value); }
+
+        private string outputImagePath;
+
+        public string OutputImagePath { get => outputImagePath; set => OnPropertyChanged(ref outputImagePath, value); }
+
+        public long SourceImageSize { get => sourceImageSize; set => OnPropertyChanged(ref sourceImageSize, value); }
+
+        public long OutputImageSize { get => outputImageSize; set => OnPropertyChanged(ref outputImageSize, value); }
+
         private Bitmap outputImage;
 
-        public Bitmap OutputImage { get => outputImage; set => OnPropertyChanged(ref outputImage, value); }
+        public Bitmap OutputImage
+        {
+            get => outputImage; 
+            set
+            {
+                OnPropertyChanged(ref outputImage, value);
+                using (var memoryStream = new MemoryStream(Convert.ToInt32(sourceImageSize)))
+                {
+                    value.Save(memoryStream, sourceImageFormat);  
+                    OutputImageSize = memoryStream.Length;
+                }
+            }
+        }
 
         private string text;
 
@@ -46,8 +85,14 @@ namespace CSharp_Steganography_WPF.ViewModels
             Filling_With_Zeros
         };
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public MainWindowViewModel()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
+            Text = string.Empty;
+            SourceImageFormat = OutputImageFormat = ImageFormat.Png;
+            SourceImagePath = OutputImagePath = "pack://application:,,,/Assets/Image_Transparent_Image.png";
+
             var uri = new Uri("pack://application:,,,/Assets/Image_Transparent_Image.png");
             BitmapImage bitmapImage = new BitmapImage(uri);
             using (MemoryStream outStream = new MemoryStream())
@@ -58,8 +103,6 @@ namespace CSharp_Steganography_WPF.ViewModels
                 Bitmap bitmap = new Bitmap(outStream);
                 SourceImage = OutputImage = new Bitmap(bitmap);
             }
-            Text = string.Empty;
-            CharCounter = @"/" + maxLength.ToString();
         }
 
         [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "<Pending>")]
@@ -199,11 +242,18 @@ namespace CSharp_Steganography_WPF.ViewModels
             get => new CommandHandler(() =>
             {
                 OpenFileDialog openFileDialog = new();
-                openFileDialog.Filter = "Image file (*.png)|*.png|Image file (*.bmp)|*.bmp";
+                openFileDialog.Filter = "Image files (*.png)|*.png|Image files (*.bmp)|*.bmp";
                 openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
                 if (openFileDialog.ShowDialog() is false)
                     return;
-                SourceImage = new(openFileDialog.FileName);
+                string extension = Path.GetExtension(openFileDialog.FileName);
+                if (extension is ".png")
+                    SourceImageFormat = ImageFormat.Png;
+                else
+                    SourceImageFormat = ImageFormat.Bmp;
+                SourceImagePath = openFileDialog.FileName;
+                SourceImage = new(SourceImagePath);
+                SourceImageSize = new FileInfo(SourceImagePath).Length;
             }, () => true);
         }
 
@@ -212,17 +262,24 @@ namespace CSharp_Steganography_WPF.ViewModels
             get => new CommandHandler(() =>
             {
                 SaveFileDialog saveFileDialog = new();
-                saveFileDialog.Filter = "Image file (*.png)|*.png|Image file (*.bmp)|*.bmp";
+                saveFileDialog.Filter = "Image files (*.png)|*.png|Image files (*.bmp)|*.bmp";
                 saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-                ImageFormat format = ImageFormat.Png;
+                saveFileDialog.FilterIndex = 1;
+                if (sourceImageFormat == ImageFormat.Bmp)
+                {
+                    saveFileDialog.FilterIndex++;
+                }
+                OutputImageFormat = ImageFormat.Png;
                 if (saveFileDialog.ShowDialog() is false)
                     return;
                 string extension = Path.GetExtension(saveFileDialog.FileName);
                 if (extension is ".bmp")
-                    format = ImageFormat.Bmp;
+                    OutputImageFormat = ImageFormat.Bmp;
+
                 try
                 {
-                    outputImage.Save(saveFileDialog.FileName, format);
+                    OutputImagePath = saveFileDialog.FileName;
+                    outputImage.Save(OutputImagePath, OutputImageFormat);
                 }
                 catch (Exception ex)
                 {
@@ -236,6 +293,8 @@ namespace CSharp_Steganography_WPF.ViewModels
             get => new CommandHandler(() =>
             {
                 OutputImage = MessageIntoImage(text, sourceImage);
+                OutputImagePath = string.Empty;
+                OutputImageFormat = sourceImageFormat;
             }, () => true);
         }
 
